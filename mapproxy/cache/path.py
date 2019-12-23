@@ -23,6 +23,8 @@ def location_funcs(layout):
         return tile_location_tc, level_location
     elif layout == 'mp':
         return tile_location_mp, level_location
+    elif layout == 'finn':
+        return tile_location_finn, level_location
     elif layout == 'tms':
         return tile_location_tms, level_location
     elif layout == 'reverse_tms':
@@ -117,6 +119,30 @@ def tile_location_mp(tile, cache_dir, file_ext, create_dir=False):
     if create_dir:
         ensure_directory(tile.location)
     return tile.location
+
+def tile_location_finn(tile, cache_dir, file_ext, create_dir=False):
+    """
+    Return the location of the `tile`. Caches the result as ``location``
+    property of the `tile`.
+
+    :param tile: the tile object
+    :param create_dir: if True, create all necessary directories
+    :return: the full filename of the tile
+
+    """
+    if tile.location is None:
+        x, y, z = tile.coord
+        parts = (cache_dir,
+                level_part(z),
+                 "%04d" % int(x / 1000),
+                 "%03d" % (int(x) % 1000),
+                 "%04d" % int(y / 1000),
+                 "%03d.%3s" % (int(y) % 1000, file_ext))
+        tile.location = os.path.join(*parts)
+    if create_dir:
+        ensure_directory(tile.location)
+    return tile.location
+
 
 def tile_location_tms(tile, cache_dir, file_ext, create_dir=False):
     """
