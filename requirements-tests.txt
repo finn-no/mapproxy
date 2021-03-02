@@ -23,7 +23,7 @@ cffi==1.13.2
 chardet==3.0.4
 cookies==2.2.1
 coverage==4.5.1
-cryptography==2.3.0
+cryptography==3.3.2
 docker==3.3.0
 docker-pycreds==0.2.3
 docutils==0.14
